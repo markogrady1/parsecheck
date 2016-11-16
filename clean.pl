@@ -4,6 +4,7 @@ use warnings;
 use strict;
 use Path::Tiny qw(path);
 use Term::ANSIColor;
+
 # Author: Mark O Grady
 # This script simply formats your templates to remove extra lines and whitespace at the end of lines.
 my $file = defined $ARGV[0] ? $ARGV[0] : "";
@@ -39,27 +40,22 @@ sub clean_template {
 sub tokens {
     my $handle = shift;
     if($handle =~ m/force_parse: /) { 
-    my @defaults =  $handle =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
-	if(@defaults) {
-     	print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
-	 }
+    	my @defaults =  $handle =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
+		if(@defaults) {
+    	 	print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
+		}
     }
 }
 
 sub check_parsing {
     my $filename = shift;
     my @defaults;
-        my $line;
-        open(my $fh, "<", $filename) or die "Cannot open file: $!";
-        while(my $line = <$fh>) {
-            location_state($line);
-#            if($line =~ m/force_parse: /) { 
-               # @defaults =  $line =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
-                #print "You are force_parsing @defaults";
-            }
-#        }
-        close $fh;
-
+    my $line;
+    open(my $fh, "<", $filename) or die "Cannot open file: $!";
+    while(my $line = <$fh>) {
+	    location_state($line);
+    }
+   close $fh;
 }
 
 sub location_state {
