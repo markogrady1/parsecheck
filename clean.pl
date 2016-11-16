@@ -41,7 +41,7 @@ sub tokens {
     if($handle =~ m/force_parse: /) { 
     my @defaults =  $handle =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
 	if(@defaults) {
-     print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
+     	print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
 	 }
     }
 }
@@ -49,21 +49,16 @@ sub tokens {
 sub check_parsing {
     my $filename = shift;
     my @defaults;
-    if($filename =~ m/.+\.template$/) {
         my $line;
         open(my $fh, "<", $filename) or die "Cannot open file: $!";
         while(my $line = <$fh>) {
             location_state($line);
 #            if($line =~ m/force_parse: /) { 
-            tokens($line);
                # @defaults =  $line =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
                 #print "You are force_parsing @defaults";
             }
 #        }
         close $fh;
-     } else {
-		msg_out(1);
-    }
 
 }
 
