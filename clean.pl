@@ -13,25 +13,7 @@ sub check_input {
 	if ($filename eq "") {
 		msg_out(0);
 	} else {
-        if(not defined $ARGV[1]) { 
-            clean_template($filename, 1);
-        } else {
-            for my $opts (@ARGV) {
-                if ($opts =~ m/--fp|--fparse/) {
-                    if (defined $ARGV[1]) {
-                        check_parsing($ARGV[1]);
-                    } else {
-                        msg_out(3, '--fp | --fparse');
-                    }
-                } elsif($opts =~ m/--c|--clean/) {
-                    if (defined $ARGV[1]) {
-                        clean_template($ARGV[1], 0);
-                    } else {
-                        msg_out(3, '--c | --clean');
-                    }
-                } 
-            }
-        }
+        clean_template($filename);
 	}
 }
 sub clean_template {
@@ -42,10 +24,7 @@ sub clean_template {
 		my $file = path($filename);
 		my $data = $file->slurp_utf8;
 		while ($line = <>) {
-            if($fparse) { 
-            #location_state($line); 
-            tokens($line);
-            }
+           	tokens($line);
 			$line =~ s/(\s+)$/\n/g;
 			$content .= $line;
 		}
@@ -61,7 +40,9 @@ sub tokens {
     my $handle = shift;
     if($handle =~ m/force_parse: /) { 
     my @defaults =  $handle =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
+	if(@defaults) {
      print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
+	 }
     }
 }
 
