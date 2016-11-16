@@ -93,7 +93,7 @@ sub msg_out {
 		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean filename.template",
 		1 => color('bold red') ."Your file is not a .template file",
 		2 => color('bold green') ."Your file has been cleaned :)",
-        3 => color('bold red') . "You must specify a file to use with the option "# . $options . color('cyan')  . " EXAMPLE: ./clean " . $options . " filename.template"
+        3 => color('bold red') . "You must specify a file to use with the option "
 	);
 	print $msg{$out_val} . "\n";
 }
