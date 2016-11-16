@@ -80,7 +80,6 @@ sub check_two {
     my $tmp = shift;
     my $no_state = shift;
     if($tmp =~ m/location_text_region/g) {
-    print "in inner region $no_state\n\n";
         if($no_state) {
             print color('white') . "You should be force parsing %location_state%\n"; 
        }
