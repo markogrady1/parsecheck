@@ -42,47 +42,12 @@ sub tokens {
     if($handle =~ m/force_parse: /) { 
     	my @defaults =  $handle =~ /(%industry%|%jobtitle%|%jobtype%|%description%|%salary%|%salary2%|%jobref%|%aplitrakid%|%rwcontactemail%|%salary_banding%|%applyonline%|%allow_applyonline%|%aplitrakurl%|%job_id%|%job_url%|%location_id%|%aplitrakurl_encoded%|%account_type%|%locale%|%brand_id%|%strapline%|%eaa_tag%)/g;
 		if(@defaults) {
-    	 	print "Unnecessary force_parsing:" . color('bold red') . " @defaults\n";
+    	 	print "Unnecessary force parsing:" . color('bold red') . " @defaults\n";
 		}
-    }
-}
-
-sub check_parsing {
-    my $filename = shift;
-    my @defaults;
-    my $line;
-    open(my $fh, "<", $filename) or die "Cannot open file: $!";
-    while(my $line = <$fh>) {
-	    location_state($line);
-    }
-   close $fh;
-}
-
-sub location_state {
-    my $handle = shift;
-    my $state = 0;
-    my $tmp = $handle;
-    $state = check_one($tmp);
-    check_two($handle, $state);
-}
-
-sub check_one {
-    my $handle = shift;
-    my $no_state;
-        if($handle =~ m/force_parse: /) { 
-            my $no_state =  $handle =~ /(%location_state%)/g ? 0 : 1;
-            return $no_state;
-        } 
-        return 1;
-}
-
-sub check_two {
-    my $tmp = shift;
-    my $no_state = shift;
-    if($tmp =~ m/location_text_region/g) {
-        if($no_state) {
-            print color('white') . "You should be force parsing %location_state%\n"; 
-       }
+        my $loc_state = $handle !~ /(%location_state%)/g;
+        if($loc_state) {
+            msg_out(4);
+        }
     }
 }
 
@@ -92,7 +57,8 @@ sub msg_out {
 		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean filename.template",
 		1 => color('bold red') ."Your file is not a .template file",
 		2 => color('bold green') ."Your file has been cleaned :)",
-        3 => color('bold red') . "You must specify a file to use with the option "
+        3 => color('bold red') . "You must specify a file to use with the option ",
+        4 => color('reset') . "not force parsed:" . color('bold yellow') . "%location_state%"
 	);
 	print $msg{$out_val} . "\n";
 }
