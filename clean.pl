@@ -17,6 +17,7 @@ sub check_input {
         clean_template($filename);
 	}
 }
+
 sub clean_template {
     my $filename = shift;
     my $fparse = shift;
