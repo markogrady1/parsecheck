@@ -6,7 +6,8 @@ use Path::Tiny qw(path);
 use Term::ANSIColor;
 
 # Author: Mark O Grady
-# This script simply formats your templates to remove extra lines and whitespace at the end of lines.
+# Formats templates to remove extra whitespace.
+# checks for default tokens.
 
 my $file = defined $ARGV[0] ? $ARGV[0] : "";
 
