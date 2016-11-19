@@ -44,12 +44,12 @@ sub tokens {
 		if(@defaults) {
     	 	print "Unnecessary force parsing:" . color('bold red') . " @defaults\n";
 		}
-        my $loc_state = $handle !~ /(%location_state%)/g;
-        if($loc_state) {
+        unless($handle =~ /(%location_state%)/g) {
             msg_out(4);
         }
     }
 }
+
 
 sub msg_out {
 	my ($out_val, $options) = @_;
