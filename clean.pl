@@ -7,8 +7,11 @@ use Term::ANSIColor;
 
 # Author: Mark O Grady
 # This script simply formats your templates to remove extra lines and whitespace at the end of lines.
+
 my $file = defined $ARGV[0] ? $ARGV[0] : "";
+
 check_input($file);
+
 sub check_input {
 	my $filename = shift;
 	if ($filename eq "") {
