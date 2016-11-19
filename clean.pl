@@ -50,11 +50,10 @@ sub tokens {
     }
 }
 
-
 sub msg_out {
 	my ($out_val, $options) = @_;
 	my %msg = ( 
-		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean filename.template",
+		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean.pl filename.template",
 		1 => color('bold red') ."Your file is not a .template file",
 		2 => color('bold green') ."Your file has been cleaned :)",
         3 => color('bold red') . "You must specify a file to use with the option ",
@@ -62,3 +61,4 @@ sub msg_out {
 	);
 	print $msg{$out_val} . "\n";
 }
+
