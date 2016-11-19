@@ -20,7 +20,6 @@ sub check_input {
 
 sub clean_template {
     my $filename = shift;
-    my $fparse = shift;
 	my ($line, $content);
     if($filename =~ m/\S.+\.template$/) {
 		my $file = path($filename);
