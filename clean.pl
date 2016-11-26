@@ -6,20 +6,22 @@ use Path::Tiny qw(path);
 use Term::ANSIColor;
 
 # Author: Mark O Grady
-# This script simply formats your templates to remove extra lines and whitespace at the end of lines.
+# Formats templates to remove extra whitespace.
+# checks for default tokens.
+
 my $file = defined $ARGV[0] ? $ARGV[0] : "";
-check_input($file);
-sub check_input {
-	my $filename = shift;
-	if ($filename eq "") {
-		msg_out(0);
-	} else {
-        clean_template($filename);
-	}
+
+unless ($file eq '') { 
+    print $file . " will be cleaned. Is this correct?\n";
+    my $input = <STDIN>;
+    clean_template($file) if $input =~ m/^yes$|^y$/i;
+    exit;
+} else {
+	msg_out(0);
 }
+
 sub clean_template {
     my $filename = shift;
-    my $fparse = shift;
 	my ($line, $content);
     if($filename =~ m/\S.+\.template$/) {
 		my $file = path($filename);
@@ -44,21 +46,22 @@ sub tokens {
 		if(@defaults) {
     	 	print "Unnecessary force parsing:" . color('bold red') . " @defaults\n";
 		}
-        my $loc_state = $handle !~ /(%location_state%)/g;
-        if($loc_state) {
+        unless($handle =~ /(%location_state%)/g) {
             msg_out(4);
         }
     }
 }
 
 sub msg_out {
-	my ($out_val, $options) = @_;
+	my $out_val = shift;
 	my %msg = ( 
-		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean filename.template",
+		0 => color('bold red') . "You must specify a file to clean." . color('cyan')  . " EXAMPLE: ./clean.pl filename.template",
 		1 => color('bold red') ."Your file is not a .template file",
 		2 => color('bold green') ."Your file has been cleaned :)",
         3 => color('bold red') . "You must specify a file to use with the option ",
-        4 => color('reset') . "not force parsed:" . color('bold yellow') . "%location_state%"
+        4 => color('reset') . "not force parsed:" . color('bold yellow') . "%location_state%",
 	);
 	print $msg{$out_val} . "\n";
 }
+
+
