@@ -36,7 +36,7 @@ sub tokens {
 		}
         $state = 1 unless $handle =~ /%location_state%/;
     }
-    if( $handle =~ m/location_text_region/ && $state ) {
+    if( $handle =~ m/location_text_region\(/ && $state ) {
         msg_out(2);
     }
 }
